@@ -1,0 +1,48 @@
+{
+    "name": "jacques/php-smartcallproxy",
+    "type": "library",
+    "description": "Library for interacting with SmartCall's Restful Proxy Client which in turn interacts with SmartCall's SOAP interface for vending pre-paid Airtime Vouchers",
+    "keywords": [
+        "airtime",
+        "smartcall"
+    ],
+    "homepage": "https://github.com/jacques/php-smartcallproxy",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jacques Marneweck",
+            "email": "jmarneweck+smartcall@gmail.com",
+            "homepage": "https://github.com/jacques/",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Jacques\\SmartCallProxy\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jacques/php-vcr"
+        }
+    ],
+    "require": {
+        "php": "~5.6|~7.0",
+        "guzzlehttp/guzzle": "*"
+    },
+    "require-dev": {
+        "codeclimate/php-test-reporter": "@dev",
+        "php-vcr/php-vcr": "dev-master",
+        "php-vcr/phpunit-testlistener-vcr": "^1.1",
+        "phpunit/phpunit": "^5.7",
+        "squizlabs/php_codesniffer": "^2.7"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors --debug --configuration=tests/phpunit.xml --coverage-clover build/logs/clover.xml --coverage-text",
+        "phpcs": "vendor/bin/phpcs --standard=PSR1,PSR2 --extensions=php src tests"
+    }
+}
