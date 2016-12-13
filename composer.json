@@ -21,12 +21,6 @@
             "Jacques\\SmartCallProxy\\": "src/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/jacques/php-vcr"
-        }
-    ],
     "require": {
         "php": "~5.6|~7.0",
         "guzzlehttp/guzzle": "*"
