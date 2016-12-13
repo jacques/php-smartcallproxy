@@ -18,22 +18,24 @@ class Client extends \GuzzleHttp\Client
 
     /**
      * Defaults to expecting that Apache Tomcat runs on port 8080 on localhost
-     * (127.0.0.1)
+     * (127.0.0.1).
+     *
      * @var array[]
      */
     protected $options = [
-        'scheme' => 'http',
+        'scheme'   => 'http',
         'hostname' => 'localhost',
-        'port' => '8080',
+        'port'     => '8080',
     ];
 
     /**
      * @param   $options array
      *
-     * @return  void
+     * @return void
      */
-    public function __construct($options = array()) {
-        /**
+    public function __construct($options = [])
+    {
+        /*
          * Allow on instantiation to overwrite the defaults
          */
         $this->options = array_merge(
@@ -49,45 +51,45 @@ class Client extends \GuzzleHttp\Client
                 $this->options['port']
             ),
             'headers' => [
-                'User-Agent' => 'SmartcallRestfulProxyClient-PHP/' . self::VERSION . ' ' . \GuzzleHttp\default_user_agent()
-            ]
+                'User-Agent' => 'SmartcallRestfulProxyClient-PHP/'.self::VERSION.' '.\GuzzleHttp\default_user_agent(),
+            ],
         ];
 
         parent::__construct($config);
     }
 
     /**
-     * Fetches the Dealer Balance from SmartCall
+     * Fetches the Dealer Balance from SmartCall.
      *
-     * @throws  Exception
+     * @throws Exception
      *
-     * @return  array
+     * @return array
      */
     public function getDealerBalance()
     {
         try {
             $response = $this->get('/SmartcallRestfulProxy/balance');
 
-            return([
-                'status' => 'ok',
+            return [
+                'status'    => 'ok',
                 'http_code' => $response->getStatusCode(),
-                'body' => (string)$response->getBody(),
-            ]);
+                'body'      => (string) $response->getBody(),
+            ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return([
-                'status' => 'error',
+            return [
+                'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body' => $e->getResponse()->getBody(true),
-            ]);
+                'body'      => $e->getResponse()->getBody(true),
+            ];
         }
     }
 
     /**
-     * Fetches the Dealer Balance from SmartCall
+     * Fetches the Dealer Balance from SmartCall.
      *
-     * @throws  Exception
+     * @throws Exception
      *
-     * @return  array
+     * @return array
      */
     public function isDealerRegistered($msisdn)
     {
@@ -99,69 +101,69 @@ class Client extends \GuzzleHttp\Client
                 )
             );
 
-            return([
-                'status' => 'ok',
+            return [
+                'status'    => 'ok',
                 'http_code' => $response->getStatusCode(),
-                'body' => (string)$response->getBody(),
-            ]);
+                'body'      => (string) $response->getBody(),
+            ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return([
-                'status' => 'error',
+            return [
+                'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body' => $e->getResponse()->getBody(true),
-            ]);
+                'body'      => $e->getResponse()->getBody(true),
+            ];
         }
     }
 
     /**
      * Fetches the Product List from SmartCall.
      *
-     * @throws  Exception
+     * @throws Exception
      *
-     * @return  array
+     * @return array
      */
     public function getProducts()
     {
         try {
             $response = $this->get('/SmartcallRestfulProxy/all_networks_js');
 
-            return([
-                'status' => 'ok',
+            return [
+                'status'    => 'ok',
                 'http_code' => $response->getStatusCode(),
-                'body' => (string)$response->getBody(),
-            ]);
+                'body'      => (string) $response->getBody(),
+            ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return([
-                'status' => 'error',
+            return [
+                'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body' => $e->getResponse()->getBody(true),
-            ]);
+                'body'      => $e->getResponse()->getBody(true),
+            ];
         }
     }
 
     /**
-     * Fetches the Dealer Balance from SmartCall
+     * Fetches the Dealer Balance from SmartCall.
      *
-     * @throws  Exception
+     * @throws Exception
      *
-     * @return  array
+     * @return array
      */
     public function getLastTransaction()
     {
         try {
             $response = $this->get('/SmartcallRestfulProxy/last_transaction_js');
 
-            return([
-                'status' => 'ok',
+            return [
+                'status'    => 'ok',
                 'http_code' => $response->getStatusCode(),
-                'body' => (string)$response->getBody(),
-            ]);
+                'body'      => (string) $response->getBody(),
+            ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return([
-                'status' => 'error',
+            return [
+                'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body' => $e->getResponse()->getBody(true),
-            ]);
+                'body'      => $e->getResponse()->getBody(true),
+            ];
         }
     }
 
@@ -169,17 +171,17 @@ class Client extends \GuzzleHttp\Client
      * Searches SmartCall for a specified transaction using a specified key and string to search
      * against at SmartCall.
      *
-     * @param   string  $field client_ref | msisdn | order_reference
-     * @param   string  $query_string Client Reference when client_ref or a users MSISDN when msisdn
+     * @param string $field        client_ref | msisdn | order_reference
+     * @param string $query_string Client Reference when client_ref or a users MSISDN when msisdn
      *
-     * @throws  Exception
+     * @throws Exception
      *
-     * @return  array
+     * @return array
      */
     public function searchTransaction($field, $search)
     {
         /**
-         * Map Smartcall's longer version of the url to shorter param to pass in
+         * Map Smartcall's longer version of the url to shorter param to pass in.
          */
         $fields = [
             'client_ref' => 'client_reference',
@@ -191,22 +193,22 @@ class Client extends \GuzzleHttp\Client
             $response = $this->get(
                 sprintf(
                     '/SmartcallRestfulProxy/last_transaction_%s_js/%s',
-                    (string)$fields[$field],
-                    (string)$search
+                    (string) $fields[$field],
+                    (string) $search
                 )
             );
 
-            return([
-                'status' => 'ok',
+            return [
+                'status'    => 'ok',
                 'http_code' => $response->getStatusCode(),
-                'body' => (string)$response->getBody(),
-            ]);
+                'body'      => (string) $response->getBody(),
+            ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return([
-                'status' => 'error',
+            return [
+                'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body' => $e->getResponse()->getBody(true),
-            ]);
+                'body'      => $e->getResponse()->getBody(true),
+            ];
         }
     }
 }
