@@ -1,0 +1,28 @@
+[{
+    "request": {
+        "method": "GET",
+        "url": "http:\/\/demo.dev01.kaizengarden.co:8080\/SmartcallRestfulProxy\/last_transaction_order_reference_js\/109372759",
+        "headers": {
+            "Host": "demo.dev01.kaizengarden.co:8080",
+            "Accept-Encoding": null,
+            "User-Agent": "SmartcallRestfulProxyClient-PHP\/0.0.1 GuzzleHttp\/6.2.1 curl\/7.43.0 PHP\/7.0.13",
+            "Accept": null
+        }
+    },
+    "response": {
+        "status": {
+            "http_version": "1.1",
+            "code": "200",
+            "message": "OK"
+        },
+        "headers": {
+            "Server": "Apache-Coyote\/1.1",
+            "Cache-Control": "private",
+            "Expires": "Thu, 01 Jan 1970 00:00:00 UTC",
+            "Content-Type": "application\/json",
+            "Content-Length": "575",
+            "Date": "Tue, 13 Dec 2016 19:53:19 GMT"
+        },
+        "body": "{\n  \"error\" : null,\n  \"responseCode\" : \"SUCCESS\",\n  \"transaction\" : {\n    \"additionalVoucherPin\" : null,\n    \"amount\" : \"R25.00\",\n    \"batchNumber\" : \"0\",\n    \"boxNumber\" : \"0\",\n    \"cost\" : \"R25.00\",\n    \"description\" : \"Order\",\n    \"discount\" : \"0.00%\",\n    \"expiryDate\" : null,\n    \"network\" : \"Electricity-Municipalities\",\n    \"recipientMsisdn\" : \"27833530837\",\n    \"reference\" : \"109372759\",\n    \"status\" : \"Successful\",\n    \"statusDate\" : 1479473184113,\n    \"statusId\" : \"SUCESSFUL\",\n    \"ticketNumber\" : \"946876584\",\n    \"voucherPin\" : \"6559 0769 8171 3340 3636\"\n  }\n}"
+    }
+}]
