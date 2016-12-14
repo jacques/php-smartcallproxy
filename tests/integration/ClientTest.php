@@ -1,10 +1,9 @@
 <?php
 /**
- * Client for SmartCall's Restful Proxy Integration Tests
+ * Client for SmartCall's Restful Proxy Integration Tests.
  *
  * @author    Jacques Marneweck <jacques@siberia.co.za>
  * @copyright 2016 Jacques Marneweck.  All rights strictly reserved.
- * @package   Plutus
  */
 
 namespace Jacques\SmartCallProxy\Tests\Integration;
@@ -12,7 +11,7 @@ namespace Jacques\SmartCallProxy\Tests\Integration;
 use Jacques\SmartCallProxy\Client;
 
 /**
- * Tests for Jacques\SmartCallProxy\Client
+ * Tests for Jacques\SmartCallProxy\Client.
  *
  * @group integration
  * @group smartcall
@@ -32,7 +31,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $this->client = new Client([
             'hostname' => 'demo.dev01.kaizengarden.co',
-            'port'     => '8080'
+            'port'     => '8080',
         ]);
         $this->assertNotNull($this->client);
         $this->assertInstanceOf('\Jacques\SmartCallProxy\Client', $this->client);
@@ -51,18 +50,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyContructor()
     {
-        $client = new \Jacques\SmartCallProxy\Client;
+        $client = new \Jacques\SmartCallProxy\Client();
         $this->assertNotNull($client);
         $this->assertInstanceOf('\Jacques\SmartCallProxy\Client', $client);
     }
 
     public function testConstructorWithOptions()
     {
-        $client = new Client(['hostname'=>'demo.dev01.kaizengarden.co','port'=>'8080']);
+        $client = new Client(['hostname'=>'demo.dev01.kaizengarden.co', 'port'=>'8080']);
         $this->assertNotNull($client);
         $this->assertInstanceOf('\Jacques\SmartCallProxy\Client', $client);
     }
-
 
     /**
      * @covers \Jacques\SmartCallProxy\Client::getDealerBalance
@@ -137,7 +135,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('smsIndicator', $json['1']->productTypes['0']->products[$i]);
         }
 
-        /**
+        /*
          * 1 - ProductTypes - 0 - Products
          */
         $this->assertEquals('100 MT-R40 Voucher', $json['1']->productTypes['0']->products['0']->description);
@@ -148,7 +146,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('100 MT-R40 Voucher', $json['1']->productTypes['0']->products['0']->name);
         $this->assertTrue($json['1']->productTypes['0']->products['0']->pinIndicator);
         $this->assertEquals(40, $json['1']->productTypes['0']->products['0']->retailValue);
-        $this->assertFalse( $json['1']->productTypes['0']->products['0']->smsIndicator);
+        $this->assertFalse($json['1']->productTypes['0']->products['0']->smsIndicator);
 
         /*
          * 1 - ProductTypes - 1
