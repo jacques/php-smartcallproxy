@@ -118,7 +118,7 @@ class Client extends \GuzzleHttp\Client
     /**
      * Fetches the Product from SmartCall.
      *
-     * @param  int $productId Product Identifier
+     * @param int $productId Product Identifier
      *
      * @throws Exception
      *
