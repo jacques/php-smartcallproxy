@@ -1,0 +1,29 @@
+[{
+    "request": {
+        "method": "POST",
+        "url": "http:\/\/demo.dev01.kaizengarden.co:8080\/SmartcallRestfulProxy\/recharge_js\/1a419b02-c301-11e6-9888-28cfe91331d9",
+        "headers": {
+            "Host": "demo.dev01.kaizengarden.co:8080",
+            "Expect": null,
+            "Accept-Encoding": null,
+            "User-Agent": "SmartcallRestfulProxyClient-PHP\/0.0.1 GuzzleHttp\/6.2.1 curl\/7.43.0 PHP\/7.0.13",
+            "Content-Type": "application\/json",
+            "Accept": null
+        },
+        "body": "{\"amount\":2,\"deviceId\":\"27833530837\",\"pinless\":false,\"productId\":65,\"sendSms\":false,\"smsRecipientMsisdn\":\"27833530837\"}"
+    },
+    "response": {
+        "status": {
+            "http_version": "1.1",
+            "code": "200",
+            "message": "OK"
+        },
+        "headers": {
+            "Server": "Apache-Coyote\/1.1",
+            "Content-Type": "application\/json",
+            "Content-Length": "312",
+            "Date": "Thu, 15 Dec 2016 20:09:03 GMT"
+        },
+        "body": "{\n  \"error\" : null,\n  \"responseCode\" : \"SUCCESS\",\n  \"recharge\" : {\n    \"balance\" : 999998.1,\n    \"batchNumber\" : \"52659281\",\n    \"boxNumber\" : \"5259828\",\n    \"expiryDate\" : 1580076000000,\n    \"orderReferenceId\" : 110108043,\n    \"ticketNumber\" : \"13950628970         \",\n    \"voucherPin\" : \"713457265222    \"\n  }\n}"
+    }
+}]

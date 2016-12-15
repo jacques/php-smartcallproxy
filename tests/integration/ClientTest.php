@@ -267,6 +267,50 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Jacques\SmartCallProxy\Client::purchaseProduct
+     * @vcr unittest_smartcallproxy_recharge_js_65
+     */
+    public function testPurchaseProduct()
+    {
+        $response = $this->client->purchaseProduct(
+            65,
+            2,
+            '27833530837',
+            '27833530837',
+            '1a419b02-c301-11e6-9888-28cfe91331d9',
+            false,
+            false
+        );
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+        $this->assertObjectHasAttribute('recharge', $json);
+
+        $this->assertNull($json->error);
+        $this->assertEquals('SUCCESS', $json->responseCode);
+
+        $this->assertObjectHasAttribute('balance', $json->recharge);
+        $this->assertObjectHasAttribute('batchNumber', $json->recharge);
+        $this->assertObjectHasAttribute('boxNumber', $json->recharge);
+        $this->assertObjectHasAttribute('expiryDate', $json->recharge);
+        $this->assertObjectHasAttribute('orderReferenceId', $json->recharge);
+        $this->assertObjectHasAttribute('ticketNumber', $json->recharge);
+        $this->assertObjectHasAttribute('voucherPin', $json->recharge);
+
+        $this->assertEquals('999998.1', $json->recharge->balance);
+        $this->assertEquals(52659281, $json->recharge->batchNumber);
+        $this->assertEquals(1580076000000, $json->recharge->expiryDate);
+        $this->assertEquals(110108043, $json->recharge->orderReferenceId);
+        $this->assertEquals('13950628970         ', $json->recharge->ticketNumber);
+        $this->assertEquals('713457265222    ', $json->recharge->voucherPin);
+    }
+
+    /**
      * @covers \Jacques\SmartCallProxy\Client::getLastTransaction
      * @vcr unittest_smartcallproxy_last_transaction_js
      */
