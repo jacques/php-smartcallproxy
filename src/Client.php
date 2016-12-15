@@ -240,13 +240,13 @@ class Client extends \GuzzleHttp\Client
     /**
      * Purchase a voucher or do a pinless recharge on SmartCall.
      *
-     * @param int $productId identifier for the product
-     * @param int $amount amount in rands of the product
-     * @param int $msisdn mobile number of the recipient of the product
-     * @param int $deviceId mobile number or meter number of the device being recharged
+     * @param int    $productId identifier for the product
+     * @param int    $amount    amount in rands of the product
+     * @param int    $msisdn    mobile number of the recipient of the product
+     * @param int    $deviceId  mobile number or meter number of the device being recharged
      * @param string $clientRef Client Reference (use a UUID)
-     * @param bool $pinless true = device will be recharged via the network's IN platform | false = pinbased virtual voucher
-     * @param bool $sendSms true = SmartCall will send the voucher via SMS | false don't send the voucher via SMS
+     * @param bool   $pinless   true = device will be recharged via the network's IN platform | false = pinbased virtual voucher
+     * @param bool   $sendSms   true = SmartCall will send the voucher via SMS | false don't send the voucher via SMS
      *
      * @throws Exception
      *
@@ -262,11 +262,11 @@ class Client extends \GuzzleHttp\Client
                 ),
                 [
                     'json' => [
-                        'amount' => $amount,
-                        'deviceId' => $deviceId,
-                        'pinless' => $pinless,
-                        'productId' => $productId,
-                        'sendSms' => $sendSms,
+                        'amount'             => $amount,
+                        'deviceId'           => $deviceId,
+                        'pinless'            => $pinless,
+                        'productId'          => $productId,
+                        'sendSms'            => $sendSms,
                         'smsRecipientMsisdn' => $msisdn,
                     ],
                 ]
