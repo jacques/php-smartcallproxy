@@ -170,7 +170,7 @@ class Client extends \GuzzleHttp\Client
     /**
      * Fetches the Product List by the specified network identifier from SmartCall.
      *
-     * @param  integer $network_id identifier for the network
+     * @param int $network_id identifier for the network
      *
      * @throws Exception
      *
