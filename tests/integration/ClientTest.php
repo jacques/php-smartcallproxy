@@ -171,6 +171,55 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Jacques\SmartCallProxy\Client::getProducts
+     * @vcr unittest_smartcallproxy_network_js_1
+     */
+    public function testGetProductsByNetwork1()
+    {
+        $response = $this->client->getProductsByNetwork(1);
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertEquals('Vodacom', $json->description);
+        $this->assertEquals(1, $json->id);
+        $this->assertInternalType('array', $json->productTypes);
+        $this->assertCount(12, $json->productTypes);
+
+        /*
+         * Product Types
+         */
+        for ($i = 0; $i < 12; $i++) {
+            $this->assertObjectHasAttribute('code', $json->productTypes[$i]);
+            $this->assertObjectHasAttribute('description', $json->productTypes[$i]);
+            $this->assertObjectHasAttribute('fixedAmount', $json->productTypes[$i]);
+            $this->assertObjectHasAttribute('id', $json->productTypes[$i]);
+            $this->assertObjectHasAttribute('products', $json->productTypes[$i]);
+        }
+
+        $this->assertEquals('P ', $json->productTypes['0']->code);
+        $this->assertEquals('12mth Pay-once Data', $json->productTypes['0']->description);
+        $this->assertTrue($json->productTypes['0']->fixedAmount);
+        $this->assertEquals(14, $json->productTypes['0']->id);
+        $this->assertInternalType('array', $json->productTypes['0']->products);
+        $this->assertCount(4, $json->productTypes['0']->products);
+
+        for ($i = 0; $i < 1; $i++) {
+            $this->assertObjectHasAttribute('description', $json->productTypes['0']->products[$i]);
+            $this->assertObjectHasAttribute('discountPercentage', $json->productTypes['0']->products[$i]);
+            $this->assertObjectHasAttribute('id', $json->productTypes['0']->products[$i]);
+            $this->assertObjectHasAttribute('maxAmount', $json->productTypes['0']->products[$i]);
+            $this->assertObjectHasAttribute('minAmount', $json->productTypes['0']->products[$i]);
+            $this->assertObjectHasAttribute('name', $json->productTypes['0']->products[$i]);
+            $this->assertObjectHasAttribute('pinIndicator', $json->productTypes['0']->products[$i]);
+            $this->assertObjectHasAttribute('retailValue', $json->productTypes['0']->products[$i]);
+            $this->assertObjectHasAttribute('smsIndicator', $json->productTypes['0']->products[$i]);
+        }
+    }
+
+    /**
      * @covers \Jacques\SmartCallProxy\Client::getLastTransaction
      * @vcr unittest_smartcallproxy_last_transaction_js
      */

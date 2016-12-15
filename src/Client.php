@@ -142,7 +142,7 @@ class Client extends \GuzzleHttp\Client
     }
 
     /**
-     * Fetches the Dealer Balance from SmartCall.
+     * Fetches the details of the last transaction processed from SmartCall.
      *
      * @throws Exception
      *
@@ -152,6 +152,39 @@ class Client extends \GuzzleHttp\Client
     {
         try {
             $response = $this->get('/SmartcallRestfulProxy/last_transaction_js');
+
+            return [
+                'status'    => 'ok',
+                'http_code' => $response->getStatusCode(),
+                'body'      => (string) $response->getBody(),
+            ];
+        } catch (\GuzzleHttp\Exception\ServerException $e) {
+            return [
+                'status'    => 'error',
+                'http_code' => $e->getResponse()->getStatusCode(),
+                'body'      => $e->getResponse()->getBody(true),
+            ];
+        }
+    }
+
+    /**
+     * Fetches the Product List by the specified network identifier from SmartCall.
+     *
+     * @param  integer $network_id identifier for the network
+     *
+     * @throws Exception
+     *
+     * @return array
+     */
+    public function getProductsByNetwork($network_id)
+    {
+        try {
+            $response = $this->get(
+                sprintf(
+                    '/SmartcallRestfulProxy/network_js/%d',
+                    $network_id
+                )
+            );
 
             return [
                 'status'    => 'ok',
