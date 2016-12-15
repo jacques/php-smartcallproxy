@@ -5,6 +5,8 @@
 [![Code Climate](https://codeclimate.com/repos/5843f9769d6f800bb60003e5/badges/aea14860b9086edef1b0/gpa.svg)](https://codeclimate.com/repos/5843f9769d6f800bb60003e5/feed)
 [![Test Coverage](https://codeclimate.com/repos/5843f9769d6f800bb60003e5/badges/aea14860b9086edef1b0/coverage.svg)](https://codeclimate.com/repos/5843f9769d6f800bb60003e5/coverage)
 [![Issue Count](https://codeclimate.com/repos/5843f9769d6f800bb60003e5/badges/aea14860b9086edef1b0/issue_count.svg)](https://codeclimate.com/repos/5843f9769d6f800bb60003e5/feed)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jacques/php-smartcallproxy/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jacques/php-smartcallproxy/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/jacques/php-smartcallproxy/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jacques/php-smartcallproxy/?branch=master)
 [![StyleCI](https://styleci.io/repos/75532043/shield?branch=master)](https://styleci.io/repos/75532043)
 
 ## License
