@@ -170,19 +170,19 @@ class Client extends \GuzzleHttp\Client
     /**
      * Fetches the Product List by the specified network identifier from SmartCall.
      *
-     * @param int $network_id identifier for the network
+     * @param int $networkId identifier for the network
      *
      * @throws Exception
      *
      * @return array
      */
-    public function getProductsByNetwork($network_id)
+    public function getProductsByNetwork($networkId)
     {
         try {
             $response = $this->get(
                 sprintf(
                     '/SmartcallRestfulProxy/network_js/%d',
-                    $network_id
+                    $networkId
                 )
             );
 
