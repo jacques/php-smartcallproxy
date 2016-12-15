@@ -79,7 +79,7 @@ class Client extends \GuzzleHttp\Client
             return [
                 'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => $e->getResponse()->getBody(true),
+                'body'      => (string) $e->getResponse()->getBody(),
             ];
         }
     }
@@ -110,7 +110,44 @@ class Client extends \GuzzleHttp\Client
             return [
                 'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => $e->getResponse()->getBody(true),
+                'body'      => (string) $e->getResponse()->getBody(),
+            ];
+        }
+    }
+
+    /**
+     * Fetches the Product from SmartCall.
+     *
+     * @param  int $productId Product Identifier
+     *
+     * @throws Exception
+     *
+     * @return array
+     */
+    public function getProduct($productId)
+    {
+        try {
+            $response = $this->get(
+                sprintf(
+                    '/SmartcallRestfulProxy/product_js/%d',
+                    $productId
+                )
+            );
+
+            return [
+                'status'    => 'ok',
+                'http_code' => $response->getStatusCode(),
+                'body'      => (string) $response->getBody(),
+            ];
+        } catch (\GuzzleHttp\Exception\ServerException $e) {
+            $body = (string) $e->getResponse()->getBody();
+
+            preg_match('!<p><b>type</b> Exception report</p><p><b>message</b> <u>(.*[^</u>])</u></p><p><b>description</b>!', $body, $matches);
+
+            return [
+                'status'    => 'error',
+                'http_code' => $e->getResponse()->getStatusCode(),
+                'body'      => $matches['1'],
             ];
         }
     }
@@ -136,7 +173,7 @@ class Client extends \GuzzleHttp\Client
             return [
                 'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => $e->getResponse()->getBody(true),
+                'body'      => (string) $e->getResponse()->getBody(),
             ];
         }
     }
@@ -162,7 +199,7 @@ class Client extends \GuzzleHttp\Client
             return [
                 'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => $e->getResponse()->getBody(true),
+                'body'      => (string) $e->getResponse()->getBody(),
             ];
         }
     }
@@ -195,7 +232,7 @@ class Client extends \GuzzleHttp\Client
             return [
                 'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => $e->getResponse()->getBody(true),
+                'body'      => (string) $e->getResponse()->getBody(),
             ];
         }
     }
@@ -240,7 +277,7 @@ class Client extends \GuzzleHttp\Client
             return [
                 'status'    => 'error',
                 'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => $e->getResponse()->getBody(true),
+                'body'      => (string) $e->getResponse()->getBody(),
             ];
         }
     }

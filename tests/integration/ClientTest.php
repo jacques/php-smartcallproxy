@@ -77,6 +77,53 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Jacques\SmartCallProxy\Client::getProducts
+     * @vcr unittest_smartcallproxy_product_js_1
+     */
+    public function testGetProduct1()
+    {
+        $response = $this->client->getProduct(1);
+
+        $this->assertEquals('error', $response['status']);
+        $this->assertEquals(500, $response['http_code']);
+        $this->assertEquals('javax.xml.ws.soap.SOAPFaultException: java.lang.IllegalArgumentException: Unknown productId passed', $response['body']);
+    }
+
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::getProducts
+     * @vcr unittest_smartcallproxy_product_js_65
+     */
+    public function testGetProduct65()
+    {
+        $response = $this->client->getProduct(65);
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('description', $json);
+        $this->assertObjectHasAttribute('discountPercentage', $json);
+        $this->assertObjectHasAttribute('id', $json);
+        $this->assertObjectHasAttribute('maxAmount', $json);
+        $this->assertObjectHasAttribute('minAmount', $json);
+        $this->assertObjectHasAttribute('name', $json);
+        $this->assertObjectHasAttribute('pinIndicator', $json);
+        $this->assertObjectHasAttribute('retailValue', $json);
+        $this->assertObjectHasAttribute('smsIndicator', $json);
+
+        $this->assertEquals('Vodacom R2 voucher', $json->description);
+        $this->assertEquals(5.3, $json->discountPercentage);
+        $this->assertEquals(65, $json->id);
+        $this->assertEquals(2, $json->maxAmount);
+        $this->assertEquals(2, $json->minAmount);
+        $this->assertEquals('Vodacom R2 voucher', $json->name);
+        $this->assertTrue($json->pinIndicator);
+        $this->assertEquals(2, $json->retailValue);
+        $this->assertFalse($json->smsIndicator);
+    }
+
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::getProducts
      * @vcr unittest_smartcallproxy_all_networks_js
      */
     public function testGetProducts()

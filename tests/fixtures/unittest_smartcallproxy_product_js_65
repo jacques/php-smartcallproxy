@@ -1,0 +1,28 @@
+[{
+    "request": {
+        "method": "GET",
+        "url": "http:\/\/demo.dev01.kaizengarden.co:8080\/SmartcallRestfulProxy\/product_js\/65",
+        "headers": {
+            "Host": "demo.dev01.kaizengarden.co:8080",
+            "Accept-Encoding": null,
+            "User-Agent": "SmartcallRestfulProxyClient-PHP\/0.0.1 GuzzleHttp\/6.2.1 curl\/7.43.0 PHP\/7.0.13",
+            "Accept": null
+        }
+    },
+    "response": {
+        "status": {
+            "http_version": "1.1",
+            "code": "200",
+            "message": "OK"
+        },
+        "headers": {
+            "Server": "Apache-Coyote\/1.1",
+            "Cache-Control": "private",
+            "Expires": "Thu, 01 Jan 1970 00:00:00 UTC",
+            "Content-Type": "application\/json",
+            "Content-Length": "238",
+            "Date": "Thu, 15 Dec 2016 17:04:48 GMT"
+        },
+        "body": "{\n  \"description\" : \"Vodacom R2 voucher\",\n  \"discountPercentage\" : 5.30,\n  \"id\" : 65,\n  \"maxAmount\" : 2.00,\n  \"minAmount\" : 2.00,\n  \"name\" : \"Vodacom R2 voucher\",\n  \"pinIndicator\" : true,\n  \"retailValue\" : 2.00,\n  \"smsIndicator\" : false\n}"
+    }
+}]
