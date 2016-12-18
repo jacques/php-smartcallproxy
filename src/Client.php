@@ -295,15 +295,15 @@ class Client extends \GuzzleHttp\Client
         }
     }
 
-    private function parseError(\GuzzleHttp\Exception\ServerException $e)
+    private function parseError(\GuzzleHttp\Exception\ServerException $exception)
     {
-        $body = (string) $e->getResponse()->getBody();
+        $body = (string) $exception->getResponse()->getBody();
 
         preg_match('!<p><b>type</b> Exception report</p><p><b>message</b> <u>(.*[^</u>])</u></p><p><b>description</b>!', $body, $matches);
 
         return [
             'status'    => 'error',
-            'http_code' => $e->getResponse()->getStatusCode(),
+            'http_code' => $exception->getResponse()->getStatusCode(),
             'body'      => $matches['1'],
         ];
     }
