@@ -377,6 +377,63 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Jacques\SmartCallProxy\Client::searchTransaction
+     * @vcr unittest_smartcallproxy_last_transaction_client_ref_79f4bace-c465-11e6-91df-5b067c075b10
+     */
+    public function testSearchTransactionByClientRefVodacomR10Pinbased()
+    {
+        $response = $this->client->searchTransaction('client_ref', '79f4bace-c465-11e6-91df-5b067c075b10');
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+        $this->assertObjectHasAttribute('transaction', $json);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+        $this->assertObjectHasAttribute('transaction', $json);
+
+        $this->assertObjectHasAttribute('additionalVoucherPin', $json->transaction);
+        $this->assertObjectHasAttribute('amount', $json->transaction);
+        $this->assertObjectHasAttribute('batchNumber', $json->transaction);
+        $this->assertObjectHasAttribute('boxNumber', $json->transaction);
+        $this->assertObjectHasAttribute('cost', $json->transaction);
+        $this->assertObjectHasAttribute('description', $json->transaction);
+        $this->assertObjectHasAttribute('discount', $json->transaction);
+        $this->assertObjectHasAttribute('expiryDate', $json->transaction);
+        $this->assertObjectHasAttribute('network', $json->transaction);
+        $this->assertObjectHasAttribute('recipientMsisdn', $json->transaction);
+        $this->assertObjectHasAttribute('reference', $json->transaction);
+        $this->assertObjectHasAttribute('status', $json->transaction);
+        $this->assertObjectHasAttribute('statusDate', $json->transaction);
+        $this->assertObjectHasAttribute('statusId', $json->transaction);
+        $this->assertObjectHasAttribute('ticketNumber', $json->transaction);
+        $this->assertObjectHasAttribute('voucherPin', $json->transaction);
+
+        $this->assertNull($json->transaction->additionalVoucherPin);
+        $this->assertEquals('R10.00', $json->transaction->amount);
+        $this->assertEquals(52719508, $json->transaction->batchNumber);
+        $this->assertEquals(5265850, $json->transaction->boxNumber);
+        $this->assertEquals('R9.47', $json->transaction->cost);
+        $this->assertEquals('Order', $json->transaction->description);
+        $this->assertEquals('5.30%', $json->transaction->discount);
+        $this->assertEquals('1580335200000', $json->transaction->expiryDate);
+        $this->assertEquals('Vodacom R10 voucher', $json->transaction->network);
+        $this->assertEquals('27833530837', $json->transaction->recipientMsisdn);
+        $this->assertEquals('110108050', $json->transaction->reference);
+        $this->assertEquals('Successful', $json->transaction->status);
+        $this->assertEquals('1481985082290', $json->transaction->statusDate);
+        $this->assertEquals('SUCESSFUL', $json->transaction->statusId);
+        $this->assertEquals('13964362434         ', $json->transaction->ticketNumber);
+    }
+
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::searchTransaction
      * @vcr unittest_smartcallproxy_last_transaction_msisdn_js_with_no_transaction
      */
     public function testSearchTransactionByMSISDNWithNoTransaction()

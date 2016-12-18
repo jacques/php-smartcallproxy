@@ -1,0 +1,28 @@
+[{
+    "request": {
+        "method": "GET",
+        "url": "http:\/\/demo.dev01.kaizengarden.co:8080\/SmartcallRestfulProxy\/last_transaction_client_reference_js\/79f4bace-c465-11e6-91df-5b067c075b10",
+        "headers": {
+            "Host": "demo.dev01.kaizengarden.co:8080",
+            "Accept-Encoding": null,
+            "User-Agent": "SmartcallRestfulProxyClient-PHP\/0.0.1 GuzzleHttp\/6.2.1 curl\/7.43.0 PHP\/7.0.13",
+            "Accept": null
+        }
+    },
+    "response": {
+        "status": {
+            "http_version": "1.1",
+            "code": "200",
+            "message": "OK"
+        },
+        "headers": {
+            "Server": "Apache-Coyote\/1.1",
+            "Cache-Control": "private",
+            "Expires": "Thu, 01 Jan 1970 00:00:00 UTC",
+            "Content-Type": "application\/json",
+            "Content-Length": "592",
+            "Date": "Sun, 18 Dec 2016 13:22:21 GMT"
+        },
+        "body": "{\n  \"error\" : null,\n  \"responseCode\" : \"SUCCESS\",\n  \"transaction\" : {\n    \"additionalVoucherPin\" : null,\n    \"amount\" : \"R10.00\",\n    \"batchNumber\" : \"52719508\",\n    \"boxNumber\" : \"5265850\",\n    \"cost\" : \"R9.47\",\n    \"description\" : \"Order\",\n    \"discount\" : \"5.30%\",\n    \"expiryDate\" : 1580335200000,\n    \"network\" : \"Vodacom R10 voucher\",\n    \"recipientMsisdn\" : \"27833530837\",\n    \"reference\" : \"110108050\",\n    \"status\" : \"Successful\",\n    \"statusDate\" : 1481985082290,\n    \"statusId\" : \"SUCESSFUL\",\n    \"ticketNumber\" : \"13964362434         \",\n    \"voucherPin\" : \"560065104777    \"\n  }\n}"
+    }
+}]
