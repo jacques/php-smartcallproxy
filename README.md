@@ -9,6 +9,22 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/jacques/php-smartcallproxy/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jacques/php-smartcallproxy/?branch=master)
 [![StyleCI](https://styleci.io/repos/75532043/shield?branch=master)](https://styleci.io/repos/75532043)
 
+Provides an HTTP client using Guzzle around SmartCall's Restful (Webservices) Proxy.
+
+## Installation
+
+```
+$ composer require jacques/php-smartcallproxy
+```
+
+```
+{
+    "require": {
+        "jacques/php-smartcallproxy": "~0.1"
+    }
+}
+```
+
 ## License
 
 Copyright (c) 2016 Jacques Marneweck <jacques@siberia.co.za>
