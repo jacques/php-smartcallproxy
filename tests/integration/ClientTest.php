@@ -434,6 +434,31 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Jacques\SmartCallProxy\Client::searchTransaction
+     * @vcr unittest_smartcallproxy_last_transaction_client_ref_not_used
+     */
+    public function testSearchTransactionByClientRefNotUsedReference()
+    {
+        $response = $this->client->searchTransaction('client_ref', 'testing');
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+        $this->assertObjectHasAttribute('transaction', $json);
+
+        $this->assertObjectHasAttribute('code', $json->error);
+        $this->assertObjectHasAttribute('message', $json->error);
+
+        $this->assertEquals(1005, $json->error->code);
+        $this->assertEquals('ClientReference does not exist', $json->error->message);
+        $this->assertEquals('APP_ERROR', $json->responseCode);
+    }
+
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::searchTransaction
      * @vcr unittest_smartcallproxy_last_transaction_msisdn_js_with_no_transaction
      */
     public function testSearchTransactionByMSISDNWithNoTransaction()
@@ -449,6 +474,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('responseCode', $json);
         $this->assertObjectHasAttribute('transaction', $json);
 
+        $this->assertNull($json->error);
+        $this->assertEquals('SUCCESS', $json->responseCode);
         $this->assertNull($json->transaction);
     }
 
