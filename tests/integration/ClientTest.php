@@ -55,6 +55,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Jacques\SmartCallProxy\Client', $client);
     }
 
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::__construct
+     */
     public function testConstructorWithOptions()
     {
         $client = new Client(['hostname'=>'demo.dev01.kaizengarden.co', 'port'=>'8080']);
@@ -76,7 +79,20 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Jacques\SmartCallProxy\Client::getProducts
+     * @covers \Jacques\SmartCallProxy\Client::isDealerRegistered
+     * @vcr unittest_smartcallproxy_registered_27833530837
+     */
+    public function testIsDealerRegistered()
+    {
+        $response = $this->client->isDealerRegistered('27833530837');
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+        $this->assertEquals('false', $response['body']);
+    }
+
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::getProduct
      * @vcr unittest_smartcallproxy_product_js_1
      */
     public function testGetProduct1()
@@ -89,7 +105,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Jacques\SmartCallProxy\Client::getProducts
+     * @covers \Jacques\SmartCallProxy\Client::getProduct
      * @vcr unittest_smartcallproxy_product_js_65
      */
     public function testGetProduct65()
@@ -218,7 +234,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Jacques\SmartCallProxy\Client::getProducts
+     * @covers \Jacques\SmartCallProxy\Client::getProductsByNetwork
      * @vcr unittest_smartcallproxy_network_js_1
      */
     public function testGetProductsByNetwork1()
