@@ -93,6 +93,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Jacques\SmartCallProxy\Client::getProduct
+     * @covers \Jacques\SmartCallProxy\Client::parseError
      * @vcr unittest_smartcallproxy_product_js_1
      */
     public function testGetProduct1()

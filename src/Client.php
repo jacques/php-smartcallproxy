@@ -76,11 +76,7 @@ class Client extends \GuzzleHttp\Client
                 'body'      => (string) $response->getBody(),
             ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return [
-                'status'    => 'error',
-                'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => (string) $e->getResponse()->getBody(),
-            ];
+            return $this->parseError($e);
         }
     }
 
@@ -107,11 +103,7 @@ class Client extends \GuzzleHttp\Client
                 'body'      => (string) $response->getBody(),
             ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return [
-                'status'    => 'error',
-                'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => (string) $e->getResponse()->getBody(),
-            ];
+            return $this->parseError($e);
         }
     }
 
@@ -140,15 +132,7 @@ class Client extends \GuzzleHttp\Client
                 'body'      => (string) $response->getBody(),
             ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            $body = (string) $e->getResponse()->getBody();
-
-            preg_match('!<p><b>type</b> Exception report</p><p><b>message</b> <u>(.*[^</u>])</u></p><p><b>description</b>!', $body, $matches);
-
-            return [
-                'status'    => 'error',
-                'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => $matches['1'],
-            ];
+            return $this->parseError($e);
         }
     }
 
@@ -170,11 +154,7 @@ class Client extends \GuzzleHttp\Client
                 'body'      => (string) $response->getBody(),
             ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return [
-                'status'    => 'error',
-                'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => (string) $e->getResponse()->getBody(),
-            ];
+            return $this->parseError($e);
         }
     }
 
@@ -196,11 +176,7 @@ class Client extends \GuzzleHttp\Client
                 'body'      => (string) $response->getBody(),
             ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return [
-                'status'    => 'error',
-                'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => (string) $e->getResponse()->getBody(),
-            ];
+            return $this->parseError($e);
         }
     }
 
@@ -229,11 +205,7 @@ class Client extends \GuzzleHttp\Client
                 'body'      => (string) $response->getBody(),
             ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return [
-                'status'    => 'error',
-                'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => (string) $e->getResponse()->getBody(),
-            ];
+            return $this->parseError($e);
         }
     }
 
@@ -278,11 +250,7 @@ class Client extends \GuzzleHttp\Client
                 'body'      => (string) $response->getBody(),
             ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return [
-                'status'    => 'error',
-                'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => (string) $e->getResponse()->getBody(),
-            ];
+            return $this->parseError($e);
         }
     }
 
@@ -323,11 +291,20 @@ class Client extends \GuzzleHttp\Client
                 'body'      => (string) $response->getBody(),
             ];
         } catch (\GuzzleHttp\Exception\ServerException $e) {
-            return [
-                'status'    => 'error',
-                'http_code' => $e->getResponse()->getStatusCode(),
-                'body'      => (string) $e->getResponse()->getBody(),
-            ];
+            return $this->parseError($e);
         }
+    }
+
+    private function parseError(\GuzzleHttp\Exception\ServerException $e)
+    {
+        $body = (string) $e->getResponse()->getBody();
+
+        preg_match('!<p><b>type</b> Exception report</p><p><b>message</b> <u>(.*[^</u>])</u></p><p><b>description</b>!', $body, $matches);
+
+        return [
+            'status'    => 'error',
+            'http_code' => $e->getResponse()->getStatusCode(),
+            'body'      => $matches['1'],
+        ];
     }
 }
