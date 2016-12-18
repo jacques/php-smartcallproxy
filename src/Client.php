@@ -252,7 +252,7 @@ class Client extends \GuzzleHttp\Client
      *
      * @return array
      */
-    public function purchaseProduct($productId, $amount, $msisdn, $deviceId, $clientRef, $pinless = true, $sendSms = false)
+    public function purchaseProduct($productId, $amount, $msisdn, $deviceId, $clientRef, $pinless, $sendSms)
     {
         try {
             $response = $this->post(
