@@ -1,3 +1,10 @@
 # Changelog
 
-## 0.0.1 (unreleased)
+## 0.1.1 (unreleased)
+
+ * Supports performing funds transfers to another SmartCall Dealer Account.
+ * Supports cancelling a recharge to a MSISDN.
+
+## 0.1.0
+
+ * Initial release of the php-smartcallproxy library. 
