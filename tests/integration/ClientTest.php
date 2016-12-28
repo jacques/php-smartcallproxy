@@ -82,7 +82,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     "message" : "A system error has occured, please report the error. Trace code :f0d1055c-8f57-4aaa-9e70-7b5350692033"
   },
   "responseCode" : "SYS_ERROR"
-}',  $response['body']);
+}', $response['body']);
 
         $json = json_decode($response['body']);
 
