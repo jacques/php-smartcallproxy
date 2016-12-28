@@ -66,6 +66,38 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Jacques\SmartCallProxy\Client::cancelRecharge
+     * @vcr unittest_smartcallproxy_cancel_recharge_js_1234567890
+     */
+    public function testCancelRechargeNonValidOrderReference()
+    {
+        $response = $this->client->cancelRecharge('1234567890');
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $this->assertEquals('{
+  "error" : {
+    "code" : 9999,
+    "message" : "A system error has occured, please report the error. Trace code :f0d1055c-8f57-4aaa-9e70-7b5350692033"
+  },
+  "responseCode" : "SYS_ERROR"
+}',  $response['body']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+
+        $this->assertObjectHasAttribute('code', $json->error);
+        $this->assertObjectHasAttribute('message', $json->error);
+
+        $this->assertEquals('9999', $json->error->code);
+        $this->assertEquals('A system error has occured, please report the error. Trace code :f0d1055c-8f57-4aaa-9e70-7b5350692033', $json->error->message);
+        $this->assertEquals('SYS_ERROR', $json->responseCode);
+    }
+
+    /**
      * @covers \Jacques\SmartCallProxy\Client::getDealerBalance
      * @vcr unittest_smartcallproxy_balance
      */
