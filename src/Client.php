@@ -62,6 +62,8 @@ class Client extends \GuzzleHttp\Client
      * Facility provided to cancel recharges.  This does not work if the recharge
      * has been processed by the MNO.
      *
+     * @param int $reference Order Reference from SmartCall
+     *
      * @throws Exception
      *
      * @return array
@@ -70,10 +72,45 @@ class Client extends \GuzzleHttp\Client
     {
         try {
             $response = $this->post(
-                '/SmartcallRestfulProxy/cancel_rechargee_js',
+                '/SmartcallRestfulProxy/cancel_recharge_js',
                 [
                     'json' => [
                         'orderReferenceId' => $reference,
+                    ],
+                ]
+            );
+
+            return [
+                'status'    => 'ok',
+                'http_code' => $response->getStatusCode(),
+                'body'      => (string) $response->getBody(),
+            ];
+        } catch (\GuzzleHttp\Exception\ServerException $e) {
+            return $this->parseError($e);
+        }
+    }
+
+    /**
+     * Transfer funds to another SmartCall Dealer Account.
+     *
+     * @param  int  $amount  Amount in rands (ZAR) to transfer to the recipients SmartCall Dealer Account
+     * @param  int  $msisdn  MSISDN of the account to receive the funds being transfered
+     * @param  bool $sendSms true = send sms | false do not send a sms
+     *
+     * @throws Exception
+     *
+     * @return array
+     */
+    public function fundsTransfer($amount, $msisdn, $sendSMS)
+    {
+        try {
+            $response = $this->post(
+                '/SmartcallRestfulProxy/fund_transfer_js',
+                [
+                    'json' => [
+                        'amount'          => $amount,
+                        'recipientMsisdn' => $msisdn,
+                        'sendSms'         => (bool)$sendSms,
                     ],
                 ]
             );
