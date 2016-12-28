@@ -82,7 +82,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     "message" : "A system error has occured, please report the error. Trace code :303419b4-89d0-4ccd-91fc-6b66b87d0ed3"
   },
   "responseCode" : "SYS_ERROR"
-}',  $response['body']);
+}', $response['body']);
 
         $json = json_decode($response['body']);
 
@@ -434,7 +434,6 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($json->recharge->ticketNumber);
         $this->assertEmpty($json->recharge->voucherPin);
     }
-
 
     /**
      * @covers \Jacques\SmartCallProxy\Client::getLastTransaction
