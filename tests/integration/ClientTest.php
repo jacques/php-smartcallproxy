@@ -67,6 +67,38 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Jacques\SmartCallProxy\Client::cancelRecharge
+     * @vcr unittest_smartcallproxy_cancel_recharge_js_110108271
+     */
+    public function testCancelRecharge110108271()
+    {
+        $response = $this->client->cancelRecharge('110108271');
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $this->assertEquals('{
+  "error" : {
+    "code" : 9999,
+    "message" : "A system error has occured, please report the error. Trace code :303419b4-89d0-4ccd-91fc-6b66b87d0ed3"
+  },
+  "responseCode" : "SYS_ERROR"
+}',  $response['body']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+
+        $this->assertObjectHasAttribute('code', $json->error);
+        $this->assertObjectHasAttribute('message', $json->error);
+
+        $this->assertEquals('9999', $json->error->code);
+        $this->assertEquals('A system error has occured, please report the error. Trace code :303419b4-89d0-4ccd-91fc-6b66b87d0ed3', $json->error->message);
+        $this->assertEquals('SYS_ERROR', $json->responseCode);
+    }
+
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::cancelRecharge
      * @vcr unittest_smartcallproxy_cancel_recharge_js_1234567890
      */
     public function testCancelRechargeNonValidOrderReference()
@@ -360,6 +392,51 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Jacques\SmartCallProxy\Client::purchaseProduct
+     * @vcr unittest_smartcallproxy_recharge_js_189
+     */
+    public function testPurchaseProductPinlessCellC()
+    {
+        $response = $this->client->purchaseProduct(
+            189,
+            2,
+            '27741037077',
+            '27741037077',
+            '7f4fbaba-cd2e-11e6-a3e5-28cfe91331d9',
+            true,
+            false
+        );
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+        $this->assertObjectHasAttribute('recharge', $json);
+
+        $this->assertNull($json->error);
+        $this->assertEquals('SUCCESS', $json->responseCode);
+
+        $this->assertObjectHasAttribute('balance', $json->recharge);
+        $this->assertObjectHasAttribute('batchNumber', $json->recharge);
+        $this->assertObjectHasAttribute('boxNumber', $json->recharge);
+        $this->assertObjectHasAttribute('expiryDate', $json->recharge);
+        $this->assertObjectHasAttribute('orderReferenceId', $json->recharge);
+        $this->assertObjectHasAttribute('ticketNumber', $json->recharge);
+        $this->assertObjectHasAttribute('voucherPin', $json->recharge);
+
+        $this->assertEquals('999503.76', $json->recharge->balance);
+        $this->assertEmpty($json->recharge->batchNumber);
+        $this->assertNull($json->recharge->expiryDate);
+        $this->assertEquals(110108271, $json->recharge->orderReferenceId);
+        $this->assertEmpty($json->recharge->ticketNumber);
+        $this->assertEmpty($json->recharge->voucherPin);
+    }
+
+
+    /**
      * @covers \Jacques\SmartCallProxy\Client::getLastTransaction
      * @vcr unittest_smartcallproxy_last_transaction_js
      */
@@ -613,5 +690,57 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('SUCESSFUL', $json->transaction->statusId);
         $this->assertEquals(946876584, $json->transaction->ticketNumber);
         $this->assertEquals('6559 0769 8171 3340 3636', $json->transaction->voucherPin);
+    }
+
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::searchTransaction
+     * @vcr unittest_smartcallproxy_last_transaction_order_reference_js_110108271
+     */
+    public function testSearchTransactionByOrderRef110108271()
+    {
+        $response = $this->client->searchTransaction('order_ref', '110108271');
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+        $this->assertObjectHasAttribute('transaction', $json);
+
+        $this->assertObjectHasAttribute('additionalVoucherPin', $json->transaction);
+        $this->assertObjectHasAttribute('amount', $json->transaction);
+        $this->assertObjectHasAttribute('batchNumber', $json->transaction);
+        $this->assertObjectHasAttribute('boxNumber', $json->transaction);
+        $this->assertObjectHasAttribute('cost', $json->transaction);
+        $this->assertObjectHasAttribute('description', $json->transaction);
+        $this->assertObjectHasAttribute('discount', $json->transaction);
+        $this->assertObjectHasAttribute('expiryDate', $json->transaction);
+        $this->assertObjectHasAttribute('network', $json->transaction);
+        $this->assertObjectHasAttribute('recipientMsisdn', $json->transaction);
+        $this->assertObjectHasAttribute('reference', $json->transaction);
+        $this->assertObjectHasAttribute('status', $json->transaction);
+        $this->assertObjectHasAttribute('statusDate', $json->transaction);
+        $this->assertObjectHasAttribute('statusId', $json->transaction);
+        $this->assertObjectHasAttribute('ticketNumber', $json->transaction);
+        $this->assertObjectHasAttribute('voucherPin', $json->transaction);
+
+        $this->assertNull($json->transaction->additionalVoucherPin);
+        $this->assertEquals('R2.00', $json->transaction->amount);
+        $this->assertEquals(0, $json->transaction->batchNumber);
+        $this->assertEquals(0, $json->transaction->boxNumber);
+        $this->assertEquals('R1.90', $json->transaction->cost);
+        $this->assertEquals('Order', $json->transaction->description);
+        $this->assertEquals('5.00%', $json->transaction->discount);
+        $this->assertNull($json->transaction->expiryDate);
+        $this->assertEquals('CellC R2-R49.99', $json->transaction->network);
+        $this->assertEquals('27741037077', $json->transaction->recipientMsisdn);
+        $this->assertEquals('110108271', $json->transaction->reference);
+        $this->assertEquals('Pending', $json->transaction->status);
+        $this->assertEquals('1482951062740', $json->transaction->statusDate);
+        $this->assertEquals('PENDING', $json->transaction->statusId);
+        $this->assertNull($json->transaction->ticketNumber);
+        $this->assertNull($json->transaction->voucherPin);
     }
 }
