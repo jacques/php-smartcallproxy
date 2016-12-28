@@ -93,9 +93,9 @@ class Client extends \GuzzleHttp\Client
     /**
      * Transfer funds to another SmartCall Dealer Account.
      *
-     * @param  int  $amount  Amount in rands (ZAR) to transfer to the recipients SmartCall Dealer Account
-     * @param  int  $msisdn  MSISDN of the account to receive the funds being transfered
-     * @param  bool $sendSms true = send sms | false do not send a sms
+     * @param int  $amount  Amount in rands (ZAR) to transfer to the recipients SmartCall Dealer Account
+     * @param int  $msisdn  MSISDN of the account to receive the funds being transfered
+     * @param bool $sendSms true = send sms | false do not send a sms
      *
      * @throws Exception
      *
@@ -110,7 +110,7 @@ class Client extends \GuzzleHttp\Client
                     'json' => [
                         'amount'          => $amount,
                         'recipientMsisdn' => $msisdn,
-                        'sendSms'         => (bool)$sendSms,
+                        'sendSms'         => (bool) $sendSms,
                     ],
                 ]
             );
