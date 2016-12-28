@@ -59,6 +59,36 @@ class Client extends \GuzzleHttp\Client
     }
 
     /**
+     * Facility provided to cancel recharges.  This does not work if the recharge
+     * has been processed by the MNO.
+     *
+     * @throws Exception
+     *
+     * @return array
+     */
+    public function cancelRecharge($reference)
+    {
+        try {
+            $response = $this->post(
+                '/SmartcallRestfulProxy/cancel_rechargee_js',
+                [
+                    'json' => [
+                        'orderReferenceId' => $reference,
+                    ],
+                ]
+            );
+
+            return [
+                'status'    => 'ok',
+                'http_code' => $response->getStatusCode(),
+                'body'      => (string) $response->getBody(),
+            ];
+        } catch (\GuzzleHttp\Exception\ServerException $e) {
+            return $this->parseError($e);
+        }
+    }
+
+    /**
      * Fetches the Dealer Balance from SmartCall.
      *
      * @throws Exception
