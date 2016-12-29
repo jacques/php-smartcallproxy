@@ -101,7 +101,7 @@ class Client extends \GuzzleHttp\Client
      *
      * @return array
      */
-    public function fundsTransfer($amount, $msisdn, $sendSMS)
+    public function fundsTransfer($amount, $msisdn, $sendSms)
     {
         try {
             $response = $this->post(
@@ -325,8 +325,8 @@ class Client extends \GuzzleHttp\Client
      * Searches SmartCall for a specified transaction using a specified key and string to search
      * against at SmartCall.
      *
-     * @param string $field        client_ref | msisdn | order_reference
-     * @param string $query_string Client Reference when client_ref or a users MSISDN when msisdn
+     * @param string $field  client_ref | msisdn | order_reference
+     * @param string $search Client Reference when client_ref or a users MSISDN when msisdn
      *
      * @throws Exception
      *
