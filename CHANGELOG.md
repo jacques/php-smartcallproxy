@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.1 (unreleased)
+## 0.1.1
 
  * Supports performing funds transfers to another SmartCall Dealer Account.
  * Supports cancelling a recharge to a MSISDN.
