@@ -393,6 +393,86 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Jacques\SmartCallProxy\Client::purchaseProduct
+     * @vcr unittest_smartcallproxy_recharge_js_62
+     */
+    public function testPurchaseProduct62()
+    {
+        $response = $this->client->purchaseProduct(
+            62,
+            2,
+            '27833530837',
+            '27833530837',
+            '483a05dc-cd9a-11e6-8982-28cfe91331d9',
+            true,
+            false
+        );
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+        $this->assertObjectHasAttribute('recharge', $json);
+
+        $this->assertNull($json->error);
+        $this->assertEquals('SUCCESS', $json->responseCode);
+
+        $this->assertObjectHasAttribute('balance', $json->recharge);
+        $this->assertObjectHasAttribute('batchNumber', $json->recharge);
+        $this->assertObjectHasAttribute('boxNumber', $json->recharge);
+        $this->assertObjectHasAttribute('expiryDate', $json->recharge);
+        $this->assertObjectHasAttribute('orderReferenceId', $json->recharge);
+        $this->assertObjectHasAttribute('ticketNumber', $json->recharge);
+        $this->assertObjectHasAttribute('voucherPin', $json->recharge);
+
+        $this->assertEquals('999498.08999999997', $json->recharge->balance);
+        $this->assertEmpty($json->recharge->batchNumber);
+        $this->assertNull($json->recharge->expiryDate);
+        $this->assertEquals(110108274, $json->recharge->orderReferenceId);
+        $this->assertEmpty($json->recharge->ticketNumber);
+        $this->assertEmpty($json->recharge->voucherPin);
+    }
+
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::purchaseProduct
+     * @vcr unittest_smartcallproxy_recharge_js_62_duplicate_txn_to_msisdn
+     */
+    public function testPurchaseProduct62DuplicateTxnToMsisdn()
+    {
+        $response = $this->client->purchaseProduct(
+            62,
+            2,
+            '27833530837',
+            '27833530837',
+            '9e019278-cd9a-11e6-b4f0-28cfe91331d9',
+            true,
+            false
+        );
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+        $this->assertObjectHasAttribute('recharge', $json);
+
+        $this->assertObjectHasAttribute('code', $json->error);
+        $this->assertObjectHasAttribute('message', $json->error);
+
+        $this->assertEquals(16, $json->error->code);
+        $this->assertEquals('A trx with the same Cell no + amount was done in the last 5 minutes. Please retry in 5 min if valid.', $json->error->message);
+
+        $this->assertEquals('APP_ERROR', $json->responseCode);
+
+        $this->assertNull($json->recharge);
+    }
+
+    /**
+     * @covers \Jacques\SmartCallProxy\Client::purchaseProduct
      * @vcr unittest_smartcallproxy_recharge_js_189
      */
     public function testPurchaseProductPinlessCellC()
