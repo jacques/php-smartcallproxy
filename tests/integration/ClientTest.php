@@ -130,6 +130,37 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Jacques\SmartCallProxy\Client::fundsTransfer
+     * @vcr unittest_smartcallproxy_fund_transfer_js
+     */
+    public function testFundsTransferDPS()
+    {
+        $response = $this->client->fundsTransfer(200, '27829677746', false);
+
+        $this->assertEquals('ok', $response['status']);
+        $this->assertEquals(200, $response['http_code']);
+
+        $this->assertEquals('{
+  "error" : null,
+  "responseCode" : "SUCCESS",
+  "currentDealerBalance" : 999281.0,
+  "newDealerBalance" : 0.0
+}', $response['body']);
+
+        $json = json_decode($response['body']);
+
+        $this->assertObjectHasAttribute('error', $json);
+        $this->assertObjectHasAttribute('responseCode', $json);
+        $this->assertObjectHasAttribute('currentDealerBalance', $json);
+        $this->assertObjectHasAttribute('newDealerBalance', $json);
+
+        $this->assertNull($json->error);
+        $this->assertEquals('SUCCESS', $json->responseCode);
+        $this->assertEquals('999281.0', $json->currentDealerBalance);
+        $this->assertEquals('0.0', $json->newDealerBalance);
+    }
+
+    /**
      * @covers \Jacques\SmartCallProxy\Client::getDealerBalance
      * @vcr unittest_smartcallproxy_balance
      */

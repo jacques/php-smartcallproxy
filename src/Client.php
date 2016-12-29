@@ -105,7 +105,7 @@ class Client extends \GuzzleHttp\Client
     {
         try {
             $response = $this->post(
-                '/SmartcallRestfulProxy/fund_transfer_js',
+                '/SmartcallRestfulProxy/funds_transfer_js',
                 [
                     'json' => [
                         'amount'          => $amount,
