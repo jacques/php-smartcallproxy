@@ -187,6 +187,19 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Jacques\SmartCallProxy\Client::getDealerBalance
+     * @vcr unittest_smartcallproxy_balance_error_not_a_registered_dealer
+     */
+    public function testGetDealerBalanceErrorNotARegisteredDealer()
+    {
+        $response = $this->client->getDealerBalance();
+
+        $this->assertEquals('error', $response['status']);
+        $this->assertEquals(500, $response['http_code']);
+        $this->assertEquals('javax.xml.ws.soap.SOAPFaultException: Not a registered SmartloadDealer', $response['body']);
+    }
+
+    /**
      * @covers \Jacques\SmartCallProxy\Client::isDealerRegistered
      * @vcr unittest_smartcallproxy_registered_27833530837
      */
