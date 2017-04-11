@@ -3,7 +3,7 @@
  * Client for Smartcall's Restful Proxy.
  *
  * @author    Jacques Marneweck <jacques@powertrip.co.za>
- * @copyright 2016 Jacques Marneweck.  All rights strictly reserved.
+ * @copyright 2016-2017 Jacques Marneweck.  All rights strictly reserved.
  * @license   MIT
  */
 
@@ -14,7 +14,7 @@ class Client extends \GuzzleHttp\Client
     /**
      * @const string Version number
      */
-    const VERSION = '0.0.1';
+    const VERSION = '0.1.1';
 
     /**
      * Defaults to expecting that Apache Tomcat runs on port 8080 on localhost
