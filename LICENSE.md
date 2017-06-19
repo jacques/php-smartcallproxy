@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-Copyright (c) 2013-2016 Jacques Marneweck <jacques@siberia.co.za>
+Copyright (c) 2013-2017 Jacques Marneweck <jacques@siberia.co.za>
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal
