@@ -362,6 +362,13 @@ class Client extends \GuzzleHttp\Client
         }
     }
 
+    /**
+     * Parse the java exception that we receive from Smartcall's Tomcat's.
+     *
+     * @param \GuzzleHttp\Exception\ServerException $exception
+     *
+     * @return array
+     */
     private function parseError(\GuzzleHttp\Exception\ServerException $exception)
     {
         $body = (string) $exception->getResponse()->getBody();
