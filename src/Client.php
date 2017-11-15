@@ -277,6 +277,53 @@ class Client extends \GuzzleHttp\Client
     }
 
     /**
+     * Prevend an item.  The client reference needs to be passed in when performing the purchase.
+     * Vodacom requires that the client reference used for the prevend gets passed back in for
+     * the actual vend.
+     *
+     * @param int    $productId identifier for the product
+     * @param int    $amount    amount in rands of the product
+     * @param int    $msisdn    mobile number of the recipient of the product
+     * @param int    $deviceId  mobile number or meter number of the device being recharged
+     * @param string $clientRef Client Reference (use a UUID)
+     * @param bool   $pinless   true = device will be recharged via the network's IN platform | false = pinbased virtual voucher
+     * @param bool   $sendSms   true = SmartCall will send the voucher via SMS | false don't send the voucher via SMS
+     *
+     * @throws Exception
+     *
+     * @return array
+     */
+    public function prevendProduct($productId, $amount, $msisdn, $deviceId, $clientRef, $pinless, $sendSms)
+    {
+        try {
+            $response = $this->post(
+                sprintf(
+                    '/SmartcallRestfulProxy/prevend_js/%s',
+                    $clientRef
+                ),
+                [
+                    'json' => [
+                        'amount'             => $amount,
+                        'deviceId'           => $deviceId,
+                        'pinless'            => $pinless,
+                        'productId'          => $productId,
+                        'sendSms'            => $sendSms,
+                        'smsRecipientMsisdn' => $msisdn,
+                    ],
+                ]
+            );
+
+            return [
+                'status'    => 'ok',
+                'http_code' => $response->getStatusCode(),
+                'body'      => (string) $response->getBody(),
+            ];
+        } catch (\GuzzleHttp\Exception\ServerException $e) {
+            return $this->parseError($e);
+        }
+    }
+
+    /**
      * Purchase a voucher or do a pinless recharge on SmartCall.
      *
      * @param int    $productId identifier for the product
