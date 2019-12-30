@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Client for SmartCall's Restful Proxy Integration Tests.
  *
@@ -9,6 +9,7 @@
 namespace Jacques\SmartCallProxy\Tests\Integration;
 
 use Jacques\SmartCallProxy\Client;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Jacques\SmartCallProxy\Client.
@@ -16,7 +17,7 @@ use Jacques\SmartCallProxy\Client;
  * @group integration
  * @group smartcall
  */
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * @var null|\Jacques\SmartCallProxy\Client
@@ -27,7 +28,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->client = new Client([
             'hostname' => 'demo.dev01.kaizengarden.co',
@@ -41,14 +42,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
     /**
      * @covers \Jacques\SmartCallProxy\Client::__construct
      */
-    public function testEmptyContructor()
+    public function testEmptyContructor(): void
     {
         $client = new \Jacques\SmartCallProxy\Client();
         $this->assertNotNull($client);
@@ -58,7 +59,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \Jacques\SmartCallProxy\Client::__construct
      */
-    public function testConstructorWithOptions()
+    public function testConstructorWithOptions(): void
     {
         $client = new Client(['hostname'=>'demo.dev01.kaizengarden.co', 'port'=>'8080']);
         $this->assertNotNull($client);
@@ -69,7 +70,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::cancelRecharge
      * @vcr unittest_smartcallproxy_cancel_recharge_js_110108271
      */
-    public function testCancelRecharge110108271()
+    public function testCancelRecharge110108271(): void
     {
         $response = $this->client->cancelRecharge('110108271');
 
@@ -101,7 +102,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::cancelRecharge
      * @vcr unittest_smartcallproxy_cancel_recharge_js_1234567890
      */
-    public function testCancelRechargeNonValidOrderReference()
+    public function testCancelRechargeNonValidOrderReference(): void
     {
         $response = $this->client->cancelRecharge('1234567890');
 
@@ -133,7 +134,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::fundsTransfer
      * @vcr unittest_smartcallproxy_fund_transfer_js
      */
-    public function testFundsTransferDPS()
+    public function testFundsTransferDPS(): void
     {
         $response = $this->client->fundsTransfer(200, '27829677746', false);
 
@@ -164,7 +165,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::getDealerBalance
      * @vcr unittest_smartcallproxy_balance
      */
-    public function testGetDealerBalance()
+    public function testGetDealerBalance(): void
     {
         $response = $this->client->getDealerBalance();
 
@@ -177,7 +178,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::getDealerBalance
      * @vcr unittest_smartcallproxy_balance_error
      */
-    public function testGetDealerBalanceError()
+    public function testGetDealerBalanceError(): void
     {
         $response = $this->client->getDealerBalance();
 
@@ -190,7 +191,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::getDealerBalance
      * @vcr unittest_smartcallproxy_balance_error_not_a_registered_dealer
      */
-    public function testGetDealerBalanceErrorNotARegisteredDealer()
+    public function testGetDealerBalanceErrorNotARegisteredDealer(): void
     {
         $response = $this->client->getDealerBalance();
 
@@ -203,7 +204,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::isDealerRegistered
      * @vcr unittest_smartcallproxy_registered_27833530837
      */
-    public function testIsDealerRegistered()
+    public function testIsDealerRegistered(): void
     {
         $response = $this->client->isDealerRegistered('27833530837');
 
@@ -217,7 +218,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::parseError
      * @vcr unittest_smartcallproxy_product_js_1
      */
-    public function testGetProduct1()
+    public function testGetProduct1(): void
     {
         $response = $this->client->getProduct(1);
 
@@ -230,7 +231,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::getProduct
      * @vcr unittest_smartcallproxy_product_js_65
      */
-    public function testGetProduct65()
+    public function testGetProduct65(): void
     {
         $response = $this->client->getProduct(65);
 
@@ -264,7 +265,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::getProducts
      * @vcr unittest_smartcallproxy_all_networks_js
      */
-    public function testGetProducts()
+    public function testGetProducts(): void
     {
         $response = $this->client->getProducts();
 
@@ -289,7 +290,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(11, $json['1']->id);
         $this->assertCount(2, $json['1']->productTypes);
 
-        $this->assertInternalType('array', $json['1']->productTypes);
+        $this->assertIsArray($json['1']->productTypes);
 
         for ($i = 0; $i < 2; $i++) {
             $this->assertObjectHasAttribute('code', $json['1']->productTypes[$i]);
@@ -359,7 +360,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::getProductsByNetwork
      * @vcr unittest_smartcallproxy_network_js_1
      */
-    public function testGetProductsByNetwork1()
+    public function testGetProductsByNetwork1(): void
     {
         $response = $this->client->getProductsByNetwork(1);
 
@@ -370,7 +371,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('Vodacom', $json->description);
         $this->assertEquals(1, $json->id);
-        $this->assertInternalType('array', $json->productTypes);
+        $this->assertIsArray($json->productTypes);
         $this->assertCount(12, $json->productTypes);
 
         /*
@@ -388,7 +389,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('12mth Pay-once Data', $json->productTypes['0']->description);
         $this->assertTrue($json->productTypes['0']->fixedAmount);
         $this->assertEquals(14, $json->productTypes['0']->id);
-        $this->assertInternalType('array', $json->productTypes['0']->products);
+        $this->assertIsArray('array', $json->productTypes['0']->products);
         $this->assertCount(4, $json->productTypes['0']->products);
 
         for ($i = 0; $i < 1; $i++) {
@@ -408,7 +409,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::purchaseProduct
      * @vcr unittest_smartcallproxy_recharge_js_65
      */
-    public function testPurchaseProduct()
+    public function testPurchaseProduct(): void
     {
         $response = $this->client->purchaseProduct(
             65,
@@ -452,7 +453,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::purchaseProduct
      * @vcr unittest_smartcallproxy_recharge_js_62
      */
-    public function testPurchaseProduct62()
+    public function testPurchaseProduct62(): void
     {
         $response = $this->client->purchaseProduct(
             62,
@@ -496,7 +497,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::purchaseProduct
      * @vcr unittest_smartcallproxy_recharge_js_62_duplicate_txn_to_msisdn
      */
-    public function testPurchaseProduct62DuplicateTxnToMsisdn()
+    public function testPurchaseProduct62DuplicateTxnToMsisdn(): void
     {
         $response = $this->client->purchaseProduct(
             62,
@@ -532,7 +533,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::purchaseProduct
      * @vcr unittest_smartcallproxy_recharge_js_189
      */
-    public function testPurchaseProductPinlessCellC()
+    public function testPurchaseProductPinlessCellC(): void
     {
         $response = $this->client->purchaseProduct(
             189,
@@ -576,7 +577,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::getLastTransaction
      * @vcr unittest_smartcallproxy_last_transaction_js
      */
-    public function testGetLastTransaction()
+    public function testGetLastTransaction(): void
     {
         $response = $this->client->getLastTransaction();
 
@@ -624,7 +625,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::searchTransaction
      * @vcr unittest_smartcallproxy_last_transaction_client_ref_79f4bace-c465-11e6-91df-5b067c075b10
      */
-    public function testSearchTransactionByClientRefVodacomR10Pinbased()
+    public function testSearchTransactionByClientRefVodacomR10Pinbased(): void
     {
         $response = $this->client->searchTransaction('client_ref', '79f4bace-c465-11e6-91df-5b067c075b10');
 
@@ -681,7 +682,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::searchTransaction
      * @vcr unittest_smartcallproxy_last_transaction_client_ref_not_used
      */
-    public function testSearchTransactionByClientRefNotUsedReference()
+    public function testSearchTransactionByClientRefNotUsedReference(): void
     {
         $response = $this->client->searchTransaction('client_ref', 'testing');
 
@@ -706,7 +707,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::searchTransaction
      * @vcr unittest_smartcallproxy_last_transaction_msisdn_js_with_no_transaction
      */
-    public function testSearchTransactionByMSISDNWithNoTransaction()
+    public function testSearchTransactionByMSISDNWithNoTransaction(): void
     {
         $response = $this->client->searchTransaction('msisdn', '0833530837');
 
@@ -728,7 +729,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::searchTransaction
      * @vcr unittest_smartcallproxy_last_transaction_msisdn_js_07123456789
      */
-    public function testSearchTransactionByMSISDNWithMeterNo()
+    public function testSearchTransactionByMSISDNWithMeterNo(): void
     {
         $response = $this->client->searchTransaction('msisdn', '07123456789');
 
@@ -780,7 +781,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::searchTransaction
      * @vcr unittest_smartcallproxy_last_transaction_order_reference_js
      */
-    public function testSearchTransactionByOrderRef()
+    public function testSearchTransactionByOrderRef(): void
     {
         $response = $this->client->searchTransaction('order_ref', '109372759');
 
@@ -832,7 +833,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Jacques\SmartCallProxy\Client::searchTransaction
      * @vcr unittest_smartcallproxy_last_transaction_order_reference_js_110108271
      */
-    public function testSearchTransactionByOrderRef110108271()
+    public function testSearchTransactionByOrderRef110108271(): void
     {
         $response = $this->client->searchTransaction('order_ref', '110108271');
 

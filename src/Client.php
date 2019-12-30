@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Client for Smartcall's Restful Proxy.
  *
  * @author    Jacques Marneweck <jacques@powertrip.co.za>
- * @copyright 2016-2017 Jacques Marneweck.  All rights strictly reserved.
+ * @copyright 2016-2019 Jacques Marneweck.  All rights strictly reserved.
  * @license   MIT
  */
 
